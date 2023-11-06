@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-gap: 24px;
+            margin-top: 2px;
+        }
+
+        .kartu {
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 5px;
+            text-align: center;
+            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 15px 0 rgba(0, 0, 0, 0.19);
+        }
+
+        .pokemon-name {
+            font-weight: medium;
+        }
+
+        .button {
+            background-color: #0c4fd6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 12px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        fetch('https://pokeapi.co/api/v2/pokemon?offset=0&limit=100')
+            .then(response => response.json())
+            .then(data => {
+                const pokemons = data.results;
+                pokemons.forEach(pokemon => {
+                  
+                    const card = document.createElement('div');
+                    card.className = 'kartu';
+                   
+                    const pokemonName = document.createElement('div');
+                    pokemonName.className = 'pokemon-name';
+                    pokemonName.textContent = pokemon.name;
+                  
+                    const button = document.createElement('a');
+                    button.className = 'button';
+                    button.href = pokemon.url;
+                    button.textContent = 'Detail';
+
+                    card.appendChild(pokemonName);
+                    card.appendChild(button);
+                    document.body.appendChild(card);
+                });
+            });
+    </script>
+</body>
+</html>
